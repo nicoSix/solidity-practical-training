@@ -1,0 +1,19 @@
+<h1>Accounts</h1>
+<hr/>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">My current account</h5>
+    <hr/>
+    <h6 class="card-subtitle mb-2 text-muted"><span id="account-address"></span></h6>
+    <p class="card-text">Balance: <span id="account-balance"></span></p>
+</div>
+<script src="./js/account_functions.js"></script>
+<script>
+  $(document).ready(function() {
+    displayCurrentAccount();
+
+    window.ethereum.on('accountsChanged', function (accounts) {
+      displayCurrentAccount();
+    })
+  });
+</script>

@@ -1,0 +1,31 @@
+<h1>Administration</h1><hr/>
+<h2>Contract balance: <span id="contract-balance"></span> ETH</h2><hr/>
+<form>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" id="input-amount" placeholder="Fund or retrieve Ether from contract by typing an amount here ...">
+    <span class="input-group-text" id="input-amount-label">ETH</span>
+  </div>
+  <button id="fund-contract-btn" class="btn btn-primary">Send to contract</button>
+  <button id="retrieve-contract-btn" class="btn btn-primary">Retrieve</button>
+</form><hr/>
+<h2>Loans awaiting decision</h2>
+<div class="row" id="requests"></div>
+<script src="./js/administration_functions.js"></script>
+<script>
+  $(document).ready(function() {
+    checkIfCurrentAccountIsOwner().then((isOwner) => {
+      if(isOwner) {
+        displayLoanRequests();
+        displayContractBalance();
+      }
+    });
+
+    $('#fund-contract-btn').click(() => {
+      handleFundLoan(parseFloat($('#input-amount').val()));
+    });
+
+    $('#retrieve-contract-btn').click(() => {
+      handleRetrieveLoan(parseFloat($('#input-amount').val()));
+    });
+  });
+</script>

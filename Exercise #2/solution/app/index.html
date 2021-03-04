@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My Lending DApp</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/app.css">
+<style>
+</style>
+    </head>
+    <body>
+        <div id="navbar"></div>
+        <div class="container" id="content"></div>
+        <script language="javascript" type="text/javascript" src="./libs/jquery-3.5.1.js"></script>
+        <script language="javascript" type="text/javascript" src="./libs/web3.min.js"></script>
+        <script src="./js/web3_functions.js"></script>
+        <script>
+        $(document).ready(function() {
+            window.addEventListener('load', () => {
+            // Wait for loading completion to avoid race conditions with web3 injection timing.
+                if (window.ethereum) {
+                    window.web3 = new Web3(window.ethereum);
+                    try {
+                        $('#content').load('html/waiting_metamask.html');
+
+                        window.ethereum.enable().then(() => {
+                            $('#content').load('html/loans.html');
+                            $('#navbar').load('html/navbar.html');
+                        });
+                        return true;
+                    }
+                    catch {
+                        $('#content').load('html/no_metamask.html');
+                        return false;
+                    }
+                }
+                // Forbid access to website without Metamask
+                else {
+                    $('#content').load('html/no_metamask.html');
+                    return false;
+                }
+            });
+        });
+        </script>
+    </body>
+</html>

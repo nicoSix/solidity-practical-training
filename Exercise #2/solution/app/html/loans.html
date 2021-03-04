@@ -1,0 +1,39 @@
+<h1>My loans</h1><hr/>
+<h2>Loan list</h2>
+<div class="row" id="loans"></div><hr/>
+<h2>Request new loan</h2>
+<h3 class="text-muted" id="current-rate-display"></h3>
+<form>
+  <label for="basic-url" class="form-label">Requested amount</label>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" id="input-amount" aria-describedby="input-amount-label">
+    <span class="input-group-text" id="input-amount-label">ETH</span>
+  </div>
+  <label for="basic-url" class="form-label">Amount to refund if borrowed</label>
+  <div class="input-group mb-3">
+    <input disabled type="number" class="form-control" id="input-torefund" aria-describedby="input-torefund-label">
+    <span class="input-group-text" id="input-torefund-label">ETH</span>
+  </div>
+  <button id="new-loan-btn" class="btn btn-primary">Request new loan</button>
+</form>
+<script src="./js/loans_functions.js"></script>
+<script>
+  var currentRate;
+
+  $(document).ready(function() {
+    getCurrentRate().then(rate => {
+      currentRate = parseFloat(rate);
+      $('#current-rate-display').html('Current rate: ' + rate + '%');
+      displayUserLoans(); 
+    })
+  });
+
+  $('#input-amount').change(() => {
+    let amount = parseFloat($('#input-amount').val());
+    $('#input-torefund').val((amount * (currentRate/100)) + amount);
+  });
+
+  $('#new-loan-btn').click(() => {
+    handleRequestLoan(parseFloat($('#input-amount').val()));
+  });
+</script>
