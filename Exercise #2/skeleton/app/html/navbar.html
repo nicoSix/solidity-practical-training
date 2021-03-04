@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">My Lending DApp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#" display="loans">My loans</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" display="account">My Eth account</span></a>
+      </li>
+      <li class="nav-item" id="administration">
+        <a class="nav-link" href="#" display="administration">Administration</a>
+        <!-- TODO : Do not display this if current Metamask account is not the owner -->
+      </li>
+    </ul>
+  </div>
+</nav>
+<script>
+  $(document).ready(function() {
+    $(".nav-link").on("click", function(e) {
+        switch (e.target.getAttribute('display')) {
+          case 'loans':
+            $("#content").load("./html/loans.html"); 
+            break;
+
+          case 'administration':
+            $("#content").load("./html/administration.html"); 
+            break;
+
+          default:
+            console.error('No corresponding page for this nav-link tag.');
+        }
+      });
+
+    // TODO : verify that current Metamask account is the owner of the contract before displaying the Administration tab
+
+    /* checkIfCurrentAccountIsOwner().then((isOwner) => {
+      if(isOwner) $('#administration').html('<a class="nav-link" href="#" display="administration">Administration</a>');
+
+      $(".nav-link").on("click", function(e) {
+        switch (e.target.getAttribute('display')) {
+          case 'loans':
+            $("#content").load("./html/loans.html"); 
+            break;
+
+          case 'administration':
+            $("#content").load("./html/administration.html"); 
+            break;
+
+          default:
+            console.error('No corresponding page for this nav-link tag.');
+        }
+      });
+    }); */
+  }); 
+</script>
