@@ -33,7 +33,7 @@ contract Lender {
     uint uniqueIdCounter = 0;
     address manager;
 
-    constructor(uint _currentRate) {
+    constructor(uint _currentRate) payable {
         manager = msg.sender;
         currentRate = _currentRate;
     }
@@ -50,6 +50,15 @@ contract Lender {
      * @dev Can be called to fund the contract by providing value in the transaction
     */
     function fundContract() public payable isOwner {}
+    
+    /**
+     * @dev Can be called to retrieve funds from the contract to the owner
+    */
+    function getContractFunds(uint amount) public payable isOwner {
+        if(amount > address(this).balance) amount = address(this).balance;
+        address payable owner = msg.sender;
+        owner.transfer(amount);
+    }
     
     /**
      * @dev Used to generate a unique id for each new Lend
@@ -150,6 +159,10 @@ contract Lender {
         return address(this).balance;
     }
     
+    function getManager() public view returns(address) {
+        return manager;
+    }
+    
     function getCurrentRate() public view returns(uint) {
         return currentRate;
     }
@@ -161,6 +174,16 @@ contract Lender {
     function getLoan(uint _loanId) public view returns(Loan memory) {
         require(idToLoan[_loanId].exists, "Loan does not exists.");
         return idToLoan[_loanId];
+    }
+
+    function getUserLoans() public view returns(Loan[] memory) {
+        uint[] memory userLoanIds = clientToLoansId[msg.sender];
+        Loan[] memory userLoans = new Loan[](userLoanIds.length);
+        
+        for(uint i = 0; i < userLoanIds.length; i++) {
+            userLoans[i] = idToLoan[userLoanIds[i]];
+        }
+        return userLoans;
     }
     
     // SETTERS
