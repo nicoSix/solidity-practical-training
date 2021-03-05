@@ -1,7 +1,3 @@
-function getCurrentAccount() {
-  // TODO
-}
-
 async function getLenderContractObj() {
   // retrieve the ABI generated from contract's deployment
   let lenderABI = await $.getJSON( '../build/contracts/Lender.json')
@@ -20,11 +16,9 @@ async function getLenderContractObj() {
   return LenderContract;
 }
 
-async function getUserLoans() {
-  // TODO
-}
+// USER FUNCTIONS
 
-async function getCurrentRate() {
+async function getUserLoans() {
   // TODO
 }
 
@@ -40,7 +34,17 @@ async function repayLoan(amount, idLoan) {
   // TODO
 }
 
+async function getCurrentRate() {
+  // TODO
+}
+
+// ADMINISTRATION FUNCTIONS
+
 async function checkIfCurrentAccountIsOwner() {
+  // TODO
+}
+
+function getCurrentAccount() {
   // TODO
 }
 
