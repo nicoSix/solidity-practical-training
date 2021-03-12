@@ -1,5 +1,5 @@
 function getCurrentAccount() {
-  return web3.eth.getAccounts((error, accounts) => {
+  return window.web3.eth.getAccounts((error, accounts) => {
     if (error) {
         return false;
     } else {
